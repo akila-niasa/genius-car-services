@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { updateProfile } from 'firebase/auth';
+import PageTitle from '../../Shared/PageTitle/PageTitle';
 
 const Login = () => {
     const emailRef=useRef('')
@@ -54,6 +55,8 @@ const Login = () => {
         }
     }
     return (
+       <div>
+            <PageTitle title="Login"></PageTitle>
         <div className='container mx-auto w-50 mt-5 p-5'>
             <h2 className='text-primary'>Please Login</h2>
             <Form onSubmit={fromSubmit}>
@@ -83,6 +86,7 @@ const Login = () => {
             <SocialLogin/>
             <ToastContainer/>
         </div>
+       </div>
     );
 };
 
