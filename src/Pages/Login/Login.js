@@ -10,6 +10,7 @@ import SocialLogin from '../SocialLogin/SocialLogin';
 import { updateProfile } from 'firebase/auth';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
 import axios from 'axios';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const emailRef=useRef('')
@@ -27,6 +28,7 @@ const Login = () => {
       const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
         auth
       );
+      const[token,setToken]=useToken(user)
       let errorElement;
     if (error) {
         errorElement= <p className='text-danger'>Error: {error?.message}</p>
@@ -38,14 +40,14 @@ const Login = () => {
        const password=passwordRef.current.value
 
      await  signInWithEmailAndPassword(email, password)
-     const{data}=await axios.post('https://peaceful-stream-47429.herokuapp.com/login',{email})
-    localStorage.setItem('access-token',data)
-    console.log(data);
-    navigate(from,{replace: true})
+    //  const{data}=await axios.post('https://peaceful-stream-47429.herokuapp.com/login',{email})
+    // localStorage.setItem('access-token',data)
+    // console.log(data);
+  
     }
-    // if(user){
-    //     navigate(from,{replace: true})
-    // }
+    if(token){
+        navigate(from,{replace: true})
+    }
     const navigateRegister=event=>{
         navigate('/register')
     }

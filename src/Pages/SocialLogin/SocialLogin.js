@@ -5,9 +5,11 @@ import github from '../../images/github.jpg'
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user2, loading2, error2] = useSignInWithGithub(auth);
+    const[token,setToken]=useToken(user||user2)
     let location=useLocation()
     let from = location.state?.from?.pathname || "/";
     const navigate=useNavigate()
@@ -19,7 +21,7 @@ const SocialLogin = () => {
       }
     
 
-      if(user||user2){
+      if(token){
         navigate(from,{replace: true})
       }
     

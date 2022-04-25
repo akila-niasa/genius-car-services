@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../firebase.init';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import './Register.css'
 
 import SocialLogin from '../Pages/SocialLogin/SocialLogin';
+import useToken from '../hooks/useToken';
 const Register = () => {
     const[agree,setAgree]=useState(false)
+    let location=useLocation()
+    let from = location.state?.from?.pathname || "/";
+
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
+      const[token,setToken]=useToken(user)
       const [updateProfile, updating,updateError] = useUpdateProfile(auth);
       let errorElement;
       if (error) {
@@ -36,8 +41,8 @@ const Register = () => {
            alert('Updated profile');
        
     }
-    if(user){
-        navigate('/home')
+    if(token){
+        navigate(from,{replace: true})
     }
     return (
         <div className='register-form'>

@@ -12,7 +12,7 @@ const Oreder = () => {
     const navigate=useNavigate()
     useEffect(()=>{
         const getOrder=async()=>{
-            const email=user.email
+            const email=user?.email
             const url=`https://peaceful-stream-47429.herokuapp.com/order?email=${email}`
          try{
             const {data}=await axiosPrivate.get(url)
@@ -35,6 +35,9 @@ const Oreder = () => {
     return (
         <div>
            <h3> {orders.length}</h3>
+           {
+               orders.map(order=><div key={order._id}>{order.email}</div>)
+           }
         </div>
     );
 };
