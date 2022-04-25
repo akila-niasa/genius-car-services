@@ -9,6 +9,7 @@ import auth from '../../firebase.init';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { updateProfile } from 'firebase/auth';
 import PageTitle from '../../Shared/PageTitle/PageTitle';
+import axios from 'axios';
 
 const Login = () => {
     const emailRef=useRef('')
@@ -31,16 +32,20 @@ const Login = () => {
         errorElement= <p className='text-danger'>Error: {error?.message}</p>
          
       }
-    const fromSubmit=event=>{
+    const fromSubmit=async event=>{
         event.preventDefault()
        const email=emailRef.current.value
        const password=passwordRef.current.value
 
-       signInWithEmailAndPassword(email, password)
+     await  signInWithEmailAndPassword(email, password)
+     const{data}=await axios.post('https://peaceful-stream-47429.herokuapp.com/login',{email})
+    localStorage.setItem('access-token',data)
+    console.log(data);
+    navigate(from,{replace: true})
     }
-    if(user){
-        navigate(from,{replace: true})
-    }
+    // if(user){
+    //     navigate(from,{replace: true})
+    // }
     const navigateRegister=event=>{
         navigate('/register')
     }

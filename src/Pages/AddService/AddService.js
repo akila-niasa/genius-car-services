@@ -5,7 +5,7 @@ const AddService = () => {
     const { register, handleSubmit } = useForm();
     const onSubmit = data =>{ 
         console.log(data);
-        fetch('http://localhost:5000/service',{
+        fetch('https://peaceful-stream-47429.herokuapp.com/service',{
             method:"POST",
             headers:{
                 'content-Type':"application/json"

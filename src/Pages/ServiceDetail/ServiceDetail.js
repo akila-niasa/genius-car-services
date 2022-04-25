@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useServiceDetails from '../../hooks/useServiceDetails';
 
 const ServiceDetail = () => {
     let {id}=useParams()
     console.log(id);
-    const [service,setService]=useState({})
+    const [service,setService]=useServiceDetails(id)
 
-    useEffect(()=>{
-        fetch(`http://localhost:5000/service/${id}`)
-        .then(res=>res.json())
-        .then(data=>setService(data))
-    },[])
-    const navigate=useNavigate()
-    const handleCheckOut=()=>{
-        navigate('/checkout')
-    }
+    // useEffect(()=>{
+    //     fetch(`https://peaceful-stream-47429.herokuapp.com/service/${id}`)
+    //     .then(res=>res.json())
+    //     .then(data=>setService(data))
+    // },[])
+    // const navigate=useNavigate()
+    // const handleCheckOut=()=>{
+    //     navigate('/checkout')
+    // }
     return (
         <div>
             <h2>welcome to detail:{service.name}</h2>
-            <button onClick={handleCheckOut}>checkout</button>
+            <Link to={`/checkout/${id}`}>
+                    <button className='btn btn-primary'>Proceed Checkout</button>
+                </Link>
         </div>
     );
 };

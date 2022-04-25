@@ -4,10 +4,12 @@ import facebook from '../../images/facebook.jpg'
 import github from '../../images/github.jpg'
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [signInWithGithub, user2, loading2, error2] = useSignInWithGithub(auth);
+    let location=useLocation()
+    let from = location.state?.from?.pathname || "/";
     const navigate=useNavigate()
     let errorElement;
     if (error||error2) {
@@ -18,7 +20,7 @@ const SocialLogin = () => {
     
 
       if(user||user2){
-          navigate('/home')
+        navigate(from,{replace: true})
       }
     
     //   if(user2){

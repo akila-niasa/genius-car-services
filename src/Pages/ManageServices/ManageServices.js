@@ -5,14 +5,14 @@ const ManageServices = () => {
     // const[services, setServices]=useServices()
     const [services,setServices]=useState([])
      useEffect(() => {
-        fetch('http://localhost:5000/service')
+        fetch('https://peaceful-stream-47429.herokuapp.com/service')
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
     const handleDelete=(id)=>{
         const proccessed=window.confirm("are you sure about that")
         if(proccessed){
-            fetch(`http://localhost:5000/service/${id}`,{
+            fetch(`https://peaceful-stream-47429.herokuapp.com/service/${id}`,{
                 method:"DELETE"
             })
             .then(res=>res.json())
